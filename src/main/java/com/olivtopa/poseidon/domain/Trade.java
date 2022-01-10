@@ -30,6 +30,10 @@ public class Trade {
 	private String dealName;
 	private String sourceListId;
 	private String side;
+	
+	public Trade() {
+		super();
+	}
 
 	public Trade(String account, String type) {
 		super();

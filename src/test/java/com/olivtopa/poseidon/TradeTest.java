@@ -3,7 +3,7 @@ package com.olivtopa.poseidon;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +25,22 @@ public class TradeTest {
 
 		// Save
 		trade = tradeRepository.save(trade);
-		Assertions.assertNotNull(trade.getTradeId());
-		Assertions.assertTrue(trade.getAccount​().equals("Trade Account"));
+		Assertions.assertThat(trade.getTradeId()).isNotNull();
+		Assertions.assertThat(trade.getAccount​()).isEqualTo("Trade Account");
 
 		// Update
 		trade.setAccount​("Trade Account Update");
 		trade = tradeRepository.save(trade);
-		Assertions.assertTrue(trade.getAccount​().equals("Trade Account Update"));
+		Assertions.assertThat(trade.getAccount​()).isEqualTo("Trade Account Update");
 
 		// Find
 		List<Trade> listResult = tradeRepository.findAll();
-		Assertions.assertTrue(listResult.size() > 0);
+		Assertions.assertThat(listResult.size()).isGreaterThan(0);
 
 		// Delete
 		Integer id = trade.getTradeId();
 		tradeRepository.delete(trade);
 		Optional<Trade> tradeList = tradeRepository.findById(id);
-		Assertions.assertFalse(tradeList.isPresent());
+		Assertions.assertThat(!tradeList.isPresent());
 	}
 }
