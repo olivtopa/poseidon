@@ -7,4 +7,5 @@ import com.olivtopa.poseidon.domain.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
 
+	User findByUserName(String userName);
 }
