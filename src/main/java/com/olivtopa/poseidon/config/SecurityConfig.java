@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setUserDetailsService(s -> {
-			User byUserName = userRepository.findByUserName(s);
+			User byUserName = userRepository.findByUsername(s);
 			return new org.springframework.security.core.userdetails.User(byUserName.getUsername(), byUserName.getPassword(),
 					Collections.emptyList());
 		});
