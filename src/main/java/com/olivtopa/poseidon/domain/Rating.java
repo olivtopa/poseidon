@@ -16,12 +16,12 @@ public class Rating {
 	private String sandPRating;
 	private String fitchRating;
 	private Integer orderNumber;
-	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNomber) {
+	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
 		super();
 		this.moodysRating = moodysRating;
 		this.sandPRating = sandPRating;
 		this.fitchRating = fitchRating;
-		this.orderNumber = orderNomber;
+		this.orderNumber = orderNumber;
 	}
 	public Integer getId() {
 		return id;

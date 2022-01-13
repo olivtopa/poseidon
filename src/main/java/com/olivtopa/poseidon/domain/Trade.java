@@ -35,10 +35,11 @@ public class Trade {
 		super();
 	}
 
-	public Trade(String account, String type) {
+	public Trade(String account, String type, Double buyQuantity​) {
 		super();
 		this.account​ = account;
 		this.type​ = type;
+		this.buyQuantity​ = buyQuantity​;
 	}
 
 	public Integer getTradeId() {
