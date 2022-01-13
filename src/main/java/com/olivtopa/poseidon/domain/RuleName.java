@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ruelname")
+@Table(name = "rulename")
 public class RuleName {
 	
 	@Id
