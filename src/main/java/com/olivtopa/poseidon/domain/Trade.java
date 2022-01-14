@@ -30,7 +30,7 @@ public class Trade {
 	private String dealName;
 	private String sourceListId;
 	private String side;
-	
+
 	public Trade() {
 		super();
 	}
@@ -177,5 +177,4 @@ public class Trade {
 	public void setSide(String side) {
 		this.side = side;
 	}
-
 }

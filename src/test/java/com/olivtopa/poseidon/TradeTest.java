@@ -13,6 +13,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.olivtopa.poseidon.domain.Trade;
 import com.olivtopa.poseidon.repositories.TradeRepository;
 
+
+
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TradeTest {
@@ -30,7 +33,7 @@ public class TradeTest {
 		Assertions.assertThat(trade.getAccount​()).isEqualTo("Trade Account");
 
 		// Update
-		trade.setAccount​("Trade Account Update");
+		trade.setAccount​("Trade Account Update");;
 		trade = tradeRepository.save(trade);
 		Assertions.assertThat(trade.getAccount​()).isEqualTo("Trade Account Update");
 
