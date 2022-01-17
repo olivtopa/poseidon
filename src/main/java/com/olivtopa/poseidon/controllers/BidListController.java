@@ -19,11 +19,12 @@ import com.olivtopa.poseidon.services.BidListService;
 public class BidListController {
 	@Autowired
 	private BidListService bidListService;
+	@Autowired
 	private BidListRepository bidListRepository;
 
 	@RequestMapping("/bidList/list")
 	public String home(Model model) {
-		bidListService.getAllBid();
+		model.addAttribute("bidlist", bidListRepository.findAll());
 		return "bidList/list";
 	}
 
@@ -36,7 +37,7 @@ public class BidListController {
 	public String validate(@Valid BidList bid, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			bidListService.save(bid);
-			model.addAttribute("bids", bidListService.getAllBid());
+			model.addAttribute("bidlist", bidListRepository.findAll());
 		}
 		return "bidList/add";
 	}
@@ -55,7 +56,7 @@ public class BidListController {
 			return "bidList/update";
 		}
 		bidList.setBidListId(id);
-		model.addAttribute("bidList", bidList);
+		model.addAttribute("bidlist", bidListRepository.findAll());
 		return "redirect:/bidList/list";
 	}
 
@@ -64,7 +65,7 @@ public class BidListController {
 		BidList bid = bidListRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid bidList Id :" + id));
 		bidListService.deleteBid(bid);
-		model.addAttribute("bid",bidListService.getAllBid());
+		model.addAttribute("bidlist",bidListService.getAllBid());
 		return "redirect:/bidList/list";
 	}
 }

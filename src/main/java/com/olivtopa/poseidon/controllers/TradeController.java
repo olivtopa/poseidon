@@ -23,14 +23,13 @@ public class TradeController {
 	    TradeRepository tradeRepository;
 
 	    @RequestMapping("/trade/list")
-	    public String home(Model model)
-	    {
-	        tradeService.getAllTrade();
+	    public String home(Model model){
+	    	model.addAttribute("trade", tradeService.getAllTrade());
 	        return "trade/list";
 	    }
 
 	    @GetMapping("/trade/add")
-	    public String addUser(Trade trade) {
+	    public String addTrade(Trade trade) {
 	        return "trade/add";
 	    }
 
@@ -38,7 +37,7 @@ public class TradeController {
 	    public String validate(@Valid Trade trade, BindingResult result, Model model) {
 	    	if (!result.hasErrors()) {
 				tradeService.save(trade);
-				model.addAttribute("curves", tradeService.getAllTrade());
+				model.addAttribute("trade", tradeService.getAllTrade());
 			}
 	        return "trade/add";
 	    }
@@ -67,7 +66,7 @@ public class TradeController {
 	    	Trade trade = tradeRepository.findById(id)
 					.orElseThrow(() -> new IllegalArgumentException("Invalid trade Id :" + id));
 	    	tradeService.deleteBid(trade);
-			model.addAttribute("rating", tradeService.getAllTrade());
+			model.addAttribute("trade", tradeService.getAllTrade());
 	        return "redirect:/trade/list";
 	    }
 
