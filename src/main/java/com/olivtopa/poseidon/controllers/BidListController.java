@@ -19,8 +19,6 @@ public class BidListController {
 	@Autowired
 	private BidListService bidListService;
 
-	@Autowired
-
 	@RequestMapping("/bidList/list")
 	public String home(Model model) {
 		model.addAttribute("bidlist", bidListService.getAllBid());
