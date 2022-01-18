@@ -16,6 +16,10 @@ public class BidListService {
 		return bidListRepository.findAll();
 	}
 
+	public BidList getBidListById(Integer bidListId){
+		return bidListRepository.findById(bidListId).orElseThrow(()->new IllegalArgumentException());
+	}
+
 	public void save(BidList bidList) {
 		bidListRepository.save(bidList);
 	}
