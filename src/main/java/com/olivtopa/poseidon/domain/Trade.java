@@ -14,9 +14,9 @@ public class Trade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tradeId;
-	private String account​;
-	private String type​;
-	private Double buyQuantity​;
+	private String account;
+	private String type;
+	private Double buyQuantity;
 	private Double sellQuantity​;
 	private Double buyPrice;
 	private String benchmark;
@@ -35,11 +35,36 @@ public class Trade {
 		super();
 	}
 
-	public Trade(String account, String type, Double buyQuantity​) {
+	public Trade(String account,String type, Double buyQuantity) {
 		super();
-		this.account​ = account;
-		this.type​ = type;
-		this.buyQuantity​ = buyQuantity​;
+		this.account = account;
+		this.type = type;
+		this.buyQuantity = buyQuantity;
+
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public Double getBuyQuantity() {
+		return buyQuantity;
+	}
+
+	public void setBuyQuantity(Double buyQuantity) {
+		this.buyQuantity = buyQuantity;
 	}
 
 	public Integer getTradeId() {
@@ -50,29 +75,7 @@ public class Trade {
 		this.tradeId = tradeId;
 	}
 
-	public String getAccount​() {
-		return account​;
-	}
-
-	public void setAccount​(String account​) {
-		this.account​ = account​;
-	}
-
-	public String getType​() {
-		return type​;
-	}
-
-	public void setType​(String type​) {
-		this.type​ = type​;
-	}
-
-	public Double getBuyQuantity​() {
-		return buyQuantity​;
-	}
-
-	public void setBuyQuantity​(Double buyQuantity​) {
-		this.buyQuantity​ = buyQuantity​;
-	}
+	
 
 	public Double getSellQuantity​() {
 		return sellQuantity​;
