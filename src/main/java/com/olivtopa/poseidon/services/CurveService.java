@@ -15,6 +15,10 @@ public class CurveService {
 	public Iterable<CurvePoint> getAllCurve() {
 		return curvePointRepository.findAll();
 	}
+	
+	public CurvePoint getCurveById(Integer id) {
+		return curvePointRepository.findById(id).orElseThrow(()->new IllegalArgumentException());
+	}
 
 	public void save(CurvePoint curvePoint) {
 		curvePointRepository.save(curvePoint);
