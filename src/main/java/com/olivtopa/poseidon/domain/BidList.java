@@ -53,7 +53,7 @@ public class BidList {
 	}
 
 	public void setBidListId(Integer bidListId) {
-		bidListId = bidListId;
+		this.bidListId = bidListId;
 	}
 
 	public String getAccount() {
