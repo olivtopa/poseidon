@@ -10,10 +10,14 @@ import com.olivtopa.poseidon.repositories.TradeRepository;
 public class TradeService {
 	
 	@Autowired
-	TradeRepository tradeRepository;
+	private TradeRepository tradeRepository;
 	
 	public Iterable<Trade> getAllTrade() {
 		return tradeRepository.findAll();
+	}
+	
+	public Trade getTradeById(Integer tradeId) {
+		return tradeRepository.findById(tradeId).orElseThrow(()->new IllegalArgumentException());
 	}
 
 	public void save(Trade trade) {

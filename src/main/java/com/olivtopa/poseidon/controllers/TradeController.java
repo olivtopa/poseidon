@@ -42,29 +42,27 @@ public class TradeController {
 	        return "trade/add";
 	    }
 
-	    @GetMapping("/trade/update/{id}")
-	    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-	    	Trade trade = tradeRepository.findById(id)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid Trade Id :" + id));
+	    @GetMapping("/trade/update/{tradeId}")
+	    public String showUpdateForm(@PathVariable("tradeId") Integer tradeId, Model model) {
+	    	Trade trade = tradeService.getTradeById(tradeId);
 			model.addAttribute("trade", trade);
 	        return "trade/update";
 	    }
 
-	    @PostMapping("/trade/update/{id}")
-	    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
+	    @PostMapping("/trade/update/{tradeId}")
+	    public String updateTrade(@PathVariable("tradeId") Integer tradeId, @Valid Trade trade,
 	                             BindingResult result, Model model) {
 	    	if (result.hasErrors()) {
-				return "rating/update";
+				return "trade/update";
 			}
-	    	trade.setTradeId(id);
-			model.addAttribute("trade", trade);
+	    	trade.setTradeId(tradeId);
+			model.addAttribute("trade", tradeService.getAllTrade());
 	        return "redirect:/trade/list";
 	    }
 
-	    @GetMapping("/trade/delete/{id}")
-	    public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-	    	Trade trade = tradeRepository.findById(id)
-					.orElseThrow(() -> new IllegalArgumentException("Invalid trade Id :" + id));
+	    @GetMapping("/trade/delete/{tradeId}")
+	    public String deleteTrade(@PathVariable("tradeId") Integer tradeId, Model model) {
+	    	Trade trade = tradeService.getTradeById(tradeId);
 	    	tradeService.deleteBid(trade);
 			model.addAttribute("trade", tradeService.getAllTrade());
 	        return "redirect:/trade/list";
