@@ -38,6 +38,7 @@ public class RatingController {
 		if (!result.hasErrors()) {
 			ratingService.save(rating);
 			model.addAttribute("curves", ratingService.getAllRating());
+			return "redirect:/rating/list";
 		}
 		return "rating/add";
 	}

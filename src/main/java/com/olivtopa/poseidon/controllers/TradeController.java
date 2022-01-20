@@ -38,6 +38,7 @@ public class TradeController {
 	    	if (!result.hasErrors()) {
 				tradeService.save(trade);
 				model.addAttribute("trade", tradeService.getAllTrade());
+				return "redirect:/trade/list";
 			}
 	        return "trade/add";
 	    }

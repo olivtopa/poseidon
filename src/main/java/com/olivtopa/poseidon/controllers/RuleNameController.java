@@ -38,6 +38,7 @@ public class RuleNameController {
     	if (!result.hasErrors()) {
 			ruleNameService.save(ruleName);
 			model.addAttribute("rueleName", ruleNameService.getAllRuleName());
+			return "redirect:/ruleName/list";
 		}
         return "ruleName/add";
     }
