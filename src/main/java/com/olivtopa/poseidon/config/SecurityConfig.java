@@ -11,10 +11,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.*;
+
+
 import com.olivtopa.poseidon.domain.User;
 import com.olivtopa.poseidon.repositories.UserRepository;
 
@@ -43,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests().anyRequest().authenticated()
 		.and().formLogin().defaultSuccessUrl("/bidList/list")
 		.and().logout().logoutSuccessUrl("/").logoutUrl("/app-logout")
-		.and().oauth2Login()
+		.and().oauth2Login().defaultSuccessUrl("/bidList/list")
 		.and().csrf().disable();
 		//@formatter:on
 	}
