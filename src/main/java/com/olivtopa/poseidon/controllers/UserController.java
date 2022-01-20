@@ -20,10 +20,10 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@RequestMapping("/users/list")
+	@RequestMapping("/user/list")
 	public String home(Model model) {
 		model.addAttribute("users", userRepository.findAll());
-		return "users/list";
+		return "user/list";
 	}
 
 	@GetMapping("/user/add")
