@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 
 @Entity
 @Table(name = "bidlist")
@@ -17,6 +18,7 @@ public class BidList {
 	private Integer bidListId;
 	private String account;
 	private String type;
+	@Digits(integer = 10,fraction = 2)
 	private Double bidQuantity;
 	private Double askQuantity;
 	private Double bid;
