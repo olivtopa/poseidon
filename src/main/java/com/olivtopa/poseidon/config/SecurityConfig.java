@@ -11,11 +11,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 
 import com.olivtopa.poseidon.domain.User;
 import com.olivtopa.poseidon.repositories.UserRepository;
@@ -29,18 +28,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/", "/bootstrap.min.css");
+		web.ignoring().antMatchers("/", "/css/**");
 	}
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		//@formatter:off
 		http
-		.authorizeRequests().antMatchers("**/list", "**/add", "**/validate", "**/update", "**/delete")
-		.hasRole("ADMIN");
+		.authorizeRequests().antMatchers("/bidList/**", "/curvePoint/**", "/rating/**", "/ruleName/**", "/trade/**")
+		.hasAnyRole("ADMIN","USER");
 		http
-		.authorizeRequests().antMatchers("**/list")
-		.hasRole("USER");
+		.authorizeRequests().antMatchers("/user/**")
+		.hasRole("ADMIN");
 		http
 		.authorizeRequests().anyRequest().authenticated()
 		.and().formLogin().defaultSuccessUrl("/bidList/list")
@@ -62,8 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		daoAuthenticationProvider.setUserDetailsService(s -> {
 			User byUserName = userRepository.findByUsername(s);
 			if (byUserName != null) {
+				SimpleGrantedAuthority role = new SimpleGrantedAuthority("ROLE_"+byUserName.getRole());
 				return new org.springframework.security.core.userdetails.User(byUserName.getUsername(),
-						byUserName.getPassword(), Collections.emptyList());
+						byUserName.getPassword(), Collections.singleton(role));
 			} else
 				throw new UsernameNotFoundException(s);
 		});

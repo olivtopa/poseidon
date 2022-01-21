@@ -2,6 +2,8 @@ package com.olivtopa.poseidon.controllers;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,9 @@ import com.olivtopa.poseidon.services.BidListService;
 
 @Controller
 public class BidListController {
+
+	private static final Logger logger = LoggerFactory.getLogger(BidListController.class);
+
 	@Autowired
 	private BidListService bidListService;
 
@@ -27,6 +32,7 @@ public class BidListController {
 
 	@GetMapping("/bidList/add")
 	public String addBidList(BidList bid) {
+		logger.info("display bid list");
 		return "bidList/add";
 	}
 
@@ -35,6 +41,7 @@ public class BidListController {
 		if (!result.hasErrors()) {
 			bidListService.save(bid);
 			model.addAttribute("bidlist", bidListService.getAllBid());
+			logger.info("add bid : {}", bid);
 			return "redirect:/bidList/list";
 		}
 		return "bidList/add";
