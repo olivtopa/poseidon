@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.olivtopa.poseidon.domain.User;
 import com.olivtopa.poseidon.repositories.UserRepository;
+import com.olivtopa.poseidon.validation.contraints.PasswordConstraintValidator;
 
 @Controller
 public class UserController {
@@ -35,10 +36,15 @@ public class UserController {
 	public String validate(@Valid User user, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			PasswordConstraintValidator passValid = new PasswordConstraintValidator();
+			
+			
+			if(passValid.isValid(user.getPassword(), null)!=false) {;
 			user.setPassword(encoder.encode(user.getPassword()));
 			userRepository.save(user);
 			model.addAttribute("users", userRepository.findAll());
 			return "redirect:/user/list";
+			}
 		}
 		return "user/add";
 	}
