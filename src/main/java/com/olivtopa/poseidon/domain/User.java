@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.olivtopa.poseidon.validation.contraints.ValidPassword;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -15,7 +17,7 @@ public class User {
 	private Integer id;
 	@NotBlank(message = "User is mandatory")
 	private String username;
-	@NotBlank(message = "Password is mandatory")
+	@ValidPassword
 	private String password;
 	@NotBlank(message = "FullName is mandatory")
 	private String fullname;
