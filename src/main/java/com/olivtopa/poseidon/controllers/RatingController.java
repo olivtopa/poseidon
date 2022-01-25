@@ -2,6 +2,8 @@ package com.olivtopa.poseidon.controllers;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import com.olivtopa.poseidon.services.RatingService;
 
 @Controller
 public class RatingController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(RatingController.class);
+	
 	@Autowired
 	private RatingService ratingService;
 	@Autowired
@@ -30,6 +35,7 @@ public class RatingController {
 
 	@GetMapping("/rating/add")
 	public String addRatingForm(Rating rating) {
+		logger.info("display Rating form");
 		return "rating/add";
 	}
 
@@ -37,7 +43,8 @@ public class RatingController {
 	public String validate(@Valid Rating rating, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			ratingService.save(rating);
-			model.addAttribute("curves", ratingService.getAllRating());
+			model.addAttribute("rating", ratingService.getAllRating());
+			logger.info("add Rating : {}", rating.getId());
 			return "redirect:/rating/list";
 		}
 		return "rating/add";
@@ -58,7 +65,8 @@ public class RatingController {
 			return "rating/update";
 		}
 		rating.setId(id);
-		model.addAttribute("curvepoint", rating);
+		model.addAttribute("rating", rating);
+		logger.info("Rating updated");
 		return "redirect:/rating/list";
 	}
 
@@ -68,6 +76,7 @@ public class RatingController {
 				.orElseThrow(() -> new IllegalArgumentException("Invalid rating Id :" + id));
 		ratingService.deleteBid(rating);
 		model.addAttribute("rating", ratingService.getAllRating());
+		logger.info("Rating {} deleted", rating.getId());
 		return "redirect:/rating/list";
 	}
 }

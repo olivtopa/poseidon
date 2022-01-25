@@ -2,6 +2,8 @@ package com.olivtopa.poseidon.controllers;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import com.olivtopa.poseidon.services.CurveService;
 
 @Controller
 public class CurveController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(CurveController.class);
+	
 	@Autowired
 	CurveService curveService;
 	@Autowired
@@ -30,6 +35,7 @@ public class CurveController {
 
 	@GetMapping("/curvePoint/add")
 	public String addBidForm(CurvePoint bid) {
+		logger.info("display CurvePoint form");
 		return "curvePoint/add";
 	}
 
@@ -38,6 +44,7 @@ public class CurveController {
 		if (!result.hasErrors()) {
 			curveService.save(curvePoint);
 			model.addAttribute("curvepoint", curveService.getAllCurve());
+			logger.info("add CurvePoint : {}", curvePoint.getId());
 			return "redirect:/curvePoint/list";
 		}
 		return "curvePoint/add";
@@ -58,6 +65,7 @@ public class CurveController {
 		}
 		curvePoint.setCurveId(id);
 		model.addAttribute("curvepoint", curveService.getAllCurve());
+		logger.info("CurvePoint updated");
 		return "redirect:/curvePoint/list";
 	}
 
@@ -66,6 +74,7 @@ public class CurveController {
 		CurvePoint curve = curveService.getCurveById(id);
 		curveService.deleteBid(curve);
 		model.addAttribute("curvePoint", curveService.getAllCurve());
+		logger.info("CurvePoint {} deleted", curve.getId());
 		return "redirect:/curvePoint/list";
 	}
 }
