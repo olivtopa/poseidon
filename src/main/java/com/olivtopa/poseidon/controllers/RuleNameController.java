@@ -24,7 +24,7 @@ public class RuleNameController {
     @RequestMapping("/ruleName/list")
     public String home(Model model)
     {
-        ruleNameService.getAllRuleName();
+        model.addAttribute("rulename", ruleNameService.getAllRuleName());
         return "ruleName/list";
     }
 
@@ -58,6 +58,7 @@ public class RuleNameController {
 			return "ruleName/update";
 		}
     	ruleName.setId(id);
+    	ruleNameService.save(ruleName);
 		model.addAttribute("ruleName", ruleName);
         return "redirect:/ruleName/list";
     }

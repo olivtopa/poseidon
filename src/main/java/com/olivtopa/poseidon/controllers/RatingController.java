@@ -29,7 +29,7 @@ public class RatingController {
 
 	@RequestMapping("/rating/list")
 	public String home(Model model) {
-		ratingService.getAllRating();
+		model.addAttribute("rating",ratingService.getAllRating());
 		return "rating/list";
 	}
 
@@ -65,6 +65,7 @@ public class RatingController {
 			return "rating/update";
 		}
 		rating.setId(id);
+		ratingService.save(rating);
 		model.addAttribute("rating", rating);
 		logger.info("Rating updated");
 		return "redirect:/rating/list";
