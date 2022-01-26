@@ -87,4 +87,10 @@ public class CurvePoint {
 		this.creationDate = creationDate;
 	}
 
+	@Override
+	public String toString() {
+		return "CurvePoint [id=" + id + ", curveId=" + curveId + ", asOfDate=" + asOfDate + ", term=" + term
+				+ ", value=" + value + ", creationDate=" + creationDate + "]";
+	}
+
 }

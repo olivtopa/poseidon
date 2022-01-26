@@ -69,4 +69,10 @@ public class Rating {
 		this.orderNumber = orderNomber;
 	}
 
+	@Override
+	public String toString() {
+		return "Rating [id=" + id + ", moodysRating=" + moodysRating + ", sandPRating=" + sandPRating + ", fitchRating="
+				+ fitchRating + ", orderNumber=" + orderNumber + "]";
+	}
+
 }

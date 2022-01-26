@@ -90,4 +90,10 @@ public class RuleName {
 		this.sqlPart = sqlPart;
 	}
 
+	@Override
+	public String toString() {
+		return "RuleName [id=" + id + ", name=" + name + ", description=" + description + ", json=" + json
+				+ ", template=" + template + ", sqlStr=" + sqlStr + ", sqlPart=" + sqlPart + "]";
+	}
+
 }

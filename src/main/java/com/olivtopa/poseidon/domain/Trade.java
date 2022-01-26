@@ -17,7 +17,7 @@ public class Trade {
 	private String account;
 	private String type;
 	private Double buyQuantity;
-	private Double sellQuantity​;
+	private Double sellQuantity;
 	private Double buyPrice;
 	private String benchmark;
 	private Timestamp tradeDate;
@@ -78,11 +78,11 @@ public class Trade {
 	
 
 	public Double getSellQuantity​() {
-		return sellQuantity​;
+		return sellQuantity;
 	}
 
-	public void setSellQuantity​(Double sellQuantity​) {
-		this.sellQuantity​ = sellQuantity​;
+	public void setSellQuantity​(Double sellQuantity) {
+		this.sellQuantity= sellQuantity;
 	}
 
 	public Double getBuyPrice() {
@@ -180,4 +180,14 @@ public class Trade {
 	public void setSide(String side) {
 		this.side = side;
 	}
+
+	@Override
+	public String toString() {
+		return "Trade [tradeId=" + tradeId + ", account=" + account + ", type=" + type + ", buyQuantity=" + buyQuantity
+				+ ", sellQuantity=" + sellQuantity + ", buyPrice=" + buyPrice + ", benchmark=" + benchmark
+				+ ", tradeDate=" + tradeDate + ", security=" + security + ", status=" + status + ", trader=" + trader
+				+ ", book=" + book + ", creationName=" + creationName + ", revisionDate=" + revisionDate + ", dealName="
+				+ dealName + ", sourceListId=" + sourceListId + ", side=" + side + "]";
+	}
+	
 }
