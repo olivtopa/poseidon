@@ -44,7 +44,7 @@ public class RatingController {
 		if (!result.hasErrors()) {
 			ratingService.save(rating);
 			model.addAttribute("rating", ratingService.getAllRating());
-			logger.info("add Rating : {}", rating.getId());
+			logger.info("Rating added ! : {}", rating);
 			return "redirect:/rating/list";
 		}
 		return "rating/add";
@@ -62,12 +62,13 @@ public class RatingController {
 	public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
+			logger.info("Update error !");
 			return "rating/update";
 		}
 		rating.setId(id);
 		ratingService.save(rating);
 		model.addAttribute("rating", rating);
-		logger.info("Rating updated");
+		logger.info("Rating updated : {}", rating);
 		return "redirect:/rating/list";
 	}
 
@@ -77,7 +78,7 @@ public class RatingController {
 				.orElseThrow(() -> new IllegalArgumentException("Invalid rating Id :" + id));
 		ratingService.deleteBid(rating);
 		model.addAttribute("rating", ratingService.getAllRating());
-		logger.info("Rating {} deleted", rating.getId());
+		logger.info("Rating deleted :{} ", rating.getId());
 		return "redirect:/rating/list";
 	}
 }

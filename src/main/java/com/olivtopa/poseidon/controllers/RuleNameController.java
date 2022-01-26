@@ -2,6 +2,8 @@ package com.olivtopa.poseidon.controllers;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import com.olivtopa.poseidon.services.RuleNameService;
 
 @Controller
 public class RuleNameController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(RuleNameController.class);	
+	
 	@Autowired
 	private RuleNameService ruleNameService;
 	@Autowired RuleNameRepository ruleNameRepository;
@@ -30,6 +35,7 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/add")
     public String addRuleForm(RuleName ruleName) {
+    	logger.info("display Rule form");
         return "ruleName/add";
     }
 
@@ -38,6 +44,7 @@ public class RuleNameController {
     	if (!result.hasErrors()) {
 			ruleNameService.save(ruleName);
 			model.addAttribute("rueleName", ruleNameService.getAllRuleName());
+			logger.info("ruleName added ! : {}", ruleName);
 			return "redirect:/ruleName/list";
 		}
         return "ruleName/add";
@@ -45,8 +52,7 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-    	RuleName ruleName = ruleNameRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid RuleName Id :" + id));
+    	RuleName ruleName = ruleNameService.getRuleById(id);
 		model.addAttribute("ruleName", ruleName);
         return "ruleName/update";
     }
@@ -55,11 +61,13 @@ public class RuleNameController {
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
                              BindingResult result, Model model) {
     	if (result.hasErrors()) {
+    		logger.info("Update error !");
 			return "ruleName/update";
 		}
     	ruleName.setId(id);
     	ruleNameService.save(ruleName);
 		model.addAttribute("ruleName", ruleName);
+		logger.info("ruleName updated ! : {}", ruleName);
         return "redirect:/ruleName/list";
     }
 
@@ -69,6 +77,7 @@ public class RuleNameController {
 				.orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id :" + id));
     	ruleNameService.deleteBid(ruleName);
 		model.addAttribute("ruleName", ruleNameService.getAllRuleName());
+		logger.info("Rule deleted : {} ",ruleName);
         return "redirect:/ruleName/list";
     }
 }

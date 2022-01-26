@@ -44,7 +44,7 @@ public class CurveController {
 		if (!result.hasErrors()) {
 			curveService.save(curvePoint);
 			model.addAttribute("curvepoint", curveService.getAllCurve());
-			logger.info("add CurvePoint : {}", curvePoint.getId());
+			logger.info("CurvePoint added ! : {}", curvePoint);
 			return "redirect:/curvePoint/list";
 		}
 		return "curvePoint/add";
@@ -61,12 +61,13 @@ public class CurveController {
 	public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
+			logger.info("Updat error !");
 			return "curvePoint/update";
 		}
 		curvePoint.setCurveId(id);
 		curveService.save(curvePoint);
 		model.addAttribute("curvepoint", curveService.getAllCurve());
-		logger.info("CurvePoint updated");
+		logger.info("CurvePoint updated ! : {}", curvePoint);
 		return "redirect:/curvePoint/list";
 	}
 
@@ -75,7 +76,7 @@ public class CurveController {
 		CurvePoint curve = curveService.getCurveById(id);
 		curveService.deleteBid(curve);
 		model.addAttribute("curvePoint", curveService.getAllCurve());
-		logger.info("CurvePoint {} deleted", curve.getId());
+		logger.info("CurvePoint deleted {}", curve.getId());
 		return "redirect:/curvePoint/list";
 	}
 }

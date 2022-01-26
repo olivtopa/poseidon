@@ -15,6 +15,10 @@ public class RuleNameService {
 	public Iterable<RuleName> getAllRuleName() {
 		return ruleNameRepository.findAll();
 	}
+	
+	public RuleName getRuleById(Integer id) {
+		return ruleNameRepository.findById(id).orElseThrow(()->new IllegalArgumentException());
+	}
 
 	public void save(RuleName ruleName) {
 		ruleNameRepository.save(ruleName);

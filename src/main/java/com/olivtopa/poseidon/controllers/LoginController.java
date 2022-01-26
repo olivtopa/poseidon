@@ -11,6 +11,7 @@ import com.olivtopa.poseidon.repositories.UserRepository;
 @Controller
 @RequestMapping
 public class LoginController {
+
 	@Autowired
 	private UserRepository userRepository;
 

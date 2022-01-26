@@ -41,7 +41,7 @@ public class BidListController {
 		if (!result.hasErrors()) {
 			bidListService.save(bid);
 			model.addAttribute("bidlist", bidListService.getAllBid());
-			logger.info("add bid : {}", bid.getBidListId());
+			logger.info("bid added ! : {}", bid);
 			return "redirect:/bidList/list";
 		}
 		return "bidList/add";
@@ -58,12 +58,13 @@ public class BidListController {
 	public String updateBid(@PathVariable("bidListId") Integer bidListId, @Valid BidList bidList, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
+			logger.info("Update error !");
 			return "bidList/update";
 		}
 		bidList.setBidListId(bidListId);
 		bidListService.save(bidList);
 		model.addAttribute("bidlist", bidListService.getAllBid());
-		logger.info("BidList updated");
+		logger.info("BidList updated ! : {}", bidList);
 		return "redirect:/bidList/list";
 	}
 
@@ -72,7 +73,7 @@ public class BidListController {
 		BidList bid = bidListService.getBidListById(bidListId);
 		bidListService.deleteBid(bid);
 		model.addAttribute("bidlist", bidListService.getAllBid());
-		logger.info("bid : {} deleted",bidListId);
+		logger.info("bid deleted: {}",bidListId);
 		return "redirect:/bidList/list";
 	}
 }
