@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.olivtopa.poseidon.domain.BidList;
+import com.olivtopa.poseidon.exceptions.DataNotFoundException;
 import com.olivtopa.poseidon.repositories.BidListRepository;
 
 @Service
@@ -17,7 +18,7 @@ public class BidListService {
 	}
 
 	public BidList getBidListById(Integer bidListId){
-		return bidListRepository.findById(bidListId).orElseThrow(()->new IllegalArgumentException());
+		return bidListRepository.findById(bidListId).orElseThrow(()->new DataNotFoundException(String.format("BidList %d not found",bidListId)));
 	}
 
 	public void save(BidList bidList) {
