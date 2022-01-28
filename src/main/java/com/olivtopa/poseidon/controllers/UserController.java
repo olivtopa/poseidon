@@ -36,15 +36,10 @@ public class UserController {
 	public String validate(@Valid User user, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			PasswordConstraintValidator passValid = new PasswordConstraintValidator();
-			
-			
-			if(passValid.isValid(user.getPassword(), null)!=false) {;
 			user.setPassword(encoder.encode(user.getPassword()));
 			userRepository.save(user);
 			model.addAttribute("users", userRepository.findAll());
 			return "redirect:/user/list";
-			}
 		}
 		return "user/add";
 	}

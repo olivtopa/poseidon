@@ -46,6 +46,7 @@ public class BidList {
 	}
 
 	public BidList(String account, String type, Double bidQuantity) {
+		//TODO parametres obligatoires
 		super();
 		this.account = account;
 		this.type = type;

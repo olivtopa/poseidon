@@ -29,29 +29,33 @@ public class RatingController {
 
 	@RequestMapping("/rating/list")
 	public String home(Model model) {
+		logger.info("Rating List page");
 		model.addAttribute("rating",ratingService.getAllRating());
 		return "rating/list";
 	}
 
 	@GetMapping("/rating/add")
 	public String addRatingForm(Rating rating) {
-		logger.info("display Rating form");
+		logger.info("display Add Rating form");
 		return "rating/add";
 	}
 
 	@PostMapping("/rating/validate")
 	public String validate(@Valid Rating rating, BindingResult result, Model model) {
+		logger.info("Adding rating {}: ", rating);
 		if (!result.hasErrors()) {
 			ratingService.save(rating);
 			model.addAttribute("rating", ratingService.getAllRating());
-			logger.info("Rating added ! : {}", rating);
+			logger.info("Rating added ! : {}", rating.getId());
 			return "redirect:/rating/list";
 		}
+		logger.info("Adding rating error ! {}", result);
 		return "rating/add";
 	}
 
 	@GetMapping("/rating/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+		logger.info("Display update rating form");
 		Rating rating = ratingRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid Rating Id :" + id));
 		model.addAttribute("rating", rating);
@@ -62,23 +66,25 @@ public class RatingController {
 	public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
-			logger.info("Update error !");
+			logger.info("Rating update error : {}!", result);
 			return "rating/update";
 		}
+		logger.info("Rating updating ...{}", rating);
 		rating.setId(id);
 		ratingService.save(rating);
 		model.addAttribute("rating", rating);
-		logger.info("Rating updated : {}", rating);
+		logger.info("Rating updated : {}", id);
 		return "redirect:/rating/list";
 	}
 
 	@GetMapping("/rating/delete/{id}")
 	public String deleteRating(@PathVariable("id") Integer id, Model model) {
+		logger.info("deleting rating :{} ", id);
 		Rating rating = ratingRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid rating Id :" + id));
 		ratingService.deleteBid(rating);
 		model.addAttribute("rating", ratingService.getAllRating());
-		logger.info("Rating deleted :{} ", rating.getId());
+		logger.info("Rating deleted !");
 		return "redirect:/rating/list";
 	}
 }

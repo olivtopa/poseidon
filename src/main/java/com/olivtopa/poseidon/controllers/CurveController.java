@@ -29,29 +29,33 @@ public class CurveController {
 
 	@RequestMapping("/curvePoint/list")
 	public String home(Model model) {
+		logger.info("Curve List page");
 		model.addAttribute("curvepoint",curveService.getAllCurve());
 		return "curvePoint/list";
 	}
 
 	@GetMapping("/curvePoint/add")
 	public String addBidForm(CurvePoint bid) {
-		logger.info("display CurvePoint form");
+		logger.info("display Add CurvePoint form");
 		return "curvePoint/add";
 	}
 
 	@PostMapping("/curvePoint/validate")
 	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+		logger.info("Adding Curve Point {}: ",curvePoint);
 		if (!result.hasErrors()) {
 			curveService.save(curvePoint);
 			model.addAttribute("curvepoint", curveService.getAllCurve());
-			logger.info("CurvePoint added ! : {}", curvePoint);
+			logger.info("CurvePoint added ! : id = {}", curvePoint.getId());
 			return "redirect:/curvePoint/list";
 		}
+		logger.info("Adding CurvePoint error ! {} ",result);
 		return "curvePoint/add";
 	}
 
 	@GetMapping("/curvePoint/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+		logger.info("Display update Curve form");
 		CurvePoint curve = curveService.getCurveById(id);
 		model.addAttribute("curvePoint", curve);
 		return "curvePoint/update";
@@ -61,22 +65,24 @@ public class CurveController {
 	public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result,
 			Model model) {
 		if (result.hasErrors()) {
-			logger.info("Updat error !");
+			logger.info("CurvePoint updat error ! {} : ",result);
 			return "curvePoint/update";
 		}
+		logger.info("CurvePoint updating ...{} ",curvePoint);
 		curvePoint.setCurveId(id);
 		curveService.save(curvePoint);
 		model.addAttribute("curvepoint", curveService.getAllCurve());
-		logger.info("CurvePoint updated ! : {}", curvePoint);
+		logger.info("CurvePoint updated ! : {}", id);
 		return "redirect:/curvePoint/list";
 	}
 
 	@GetMapping("/curvePoint/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id, Model model) {
+		logger.info("Deleting CurvePoint {} ...", id);
 		CurvePoint curve = curveService.getCurveById(id);
 		curveService.deleteBid(curve);
 		model.addAttribute("curvePoint", curveService.getAllCurve());
-		logger.info("CurvePoint deleted {}", curve.getId());
+		logger.info("CurvePoint deleted !");
 		return "redirect:/curvePoint/list";
 	}
 }

@@ -33,6 +33,7 @@ public class CurvePoint {
 	}
 
 	public CurvePoint(Integer curveId, Double term, Double value) {
+		// TODO param obligatoires
 		super();
 		this.curveId = curveId;
 		this.term = term;

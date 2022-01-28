@@ -25,6 +25,7 @@ public class RuleName {
 	}
 
 	public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
+		//TODO Obligatoire : name, description
 		super();
 		this.name = name;
 		this.description = description;

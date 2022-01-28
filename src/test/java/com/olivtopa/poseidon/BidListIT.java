@@ -27,7 +27,7 @@ import com.olivtopa.poseidon.repositories.BidListRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BisdListIT {
+public class BidListIT {
 
 	@Autowired
 	BidListRepository bidListRepository;
