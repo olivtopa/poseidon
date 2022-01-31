@@ -46,7 +46,7 @@ public class TradeController {
 	    	if (!result.hasErrors()) {
 				tradeService.save(trade);
 				model.addAttribute("trade", tradeService.getAllTrade());
-				logger.info("trade added ! : id = {}" trade.getTradeId());
+				logger.info("trade added ! : id = {} ", trade.getTradeId());
 				return "redirect:/trade/list";
 			}
 	    	logger.info("Adding Trade error ! {} ", result);
@@ -72,7 +72,7 @@ public class TradeController {
 	    	trade.setTradeId(tradeId);
 	    	tradeService.save(trade);
 			model.addAttribute("trade", tradeService.getAllTrade());
-			logger.info("Trade updated ! : {}", trade.getTradeId);
+			logger.info("Trade updated ! : {}", trade.getTradeId());
 	        return "redirect:/trade/list";
 	    }
 

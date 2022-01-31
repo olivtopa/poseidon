@@ -8,7 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "bidlist")
@@ -20,7 +21,8 @@ public class BidList {
 	private String account;
 	private String type;
 	@Digits(integer = 10, fraction = 2)
-	@PositiveOrZero(message = "this value must not be negative")
+	@Positive(message = "this value must not be negative")
+	@NotNull(message = "this must be numeric and not null")
 	private Double bidQuantity;
 	private Double askQuantity;
 	private Double bid;
@@ -46,7 +48,7 @@ public class BidList {
 	}
 
 	public BidList(String account, String type, Double bidQuantity) {
-		//TODO parametres obligatoires
+		// TODO parametres obligatoires
 		super();
 		this.account = account;
 		this.type = type;
