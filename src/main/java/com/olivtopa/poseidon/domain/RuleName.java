@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "rulename")
@@ -13,7 +14,9 @@ public class RuleName {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@NotEmpty(message = "This field is required")
 	private String name;
+	@NotEmpty(message = "This field is required")
 	private String description;
 	private String json;
 	private String template;
@@ -25,7 +28,7 @@ public class RuleName {
 	}
 
 	public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
-		//TODO Obligatoire : name, description
+		//Obligatoire : name, description
 		super();
 		this.name = name;
 		this.description = description;

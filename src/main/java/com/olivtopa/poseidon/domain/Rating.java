@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "rating")
@@ -15,6 +18,9 @@ public class Rating {
 	private String moodysRating;
 	private String sandPRating;
 	private String fitchRating;
+	@Digits(integer = 10, fraction = 2)
+	@Positive(message = "this value must not be negative")
+	@NotNull(message = "this must be numeric and not null")
 	private Integer orderNumber;
 
 	public Rating() {
@@ -22,7 +28,7 @@ public class Rating {
 	}
 
 	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
-		//TODO  orderNumber obligatoire
+		//orderNumber obligatoire
 		super();
 		this.moodysRating = moodysRating;
 		this.sandPRating = sandPRating;

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -18,7 +19,9 @@ public class BidList {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
 	private Integer bidListId;
+	@NotEmpty(message = "This field is required")
 	private String account;
+	@NotEmpty(message = "This field is required")
 	private String type;
 	@Digits(integer = 10, fraction = 2)
 	@Positive(message = "this value must not be negative")
@@ -48,7 +51,7 @@ public class BidList {
 	}
 
 	public BidList(String account, String type, Double bidQuantity) {
-		// TODO parametres obligatoires
+		// parametres obligatoires
 		super();
 		this.account = account;
 		this.type = type;

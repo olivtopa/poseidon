@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "trade")
@@ -14,8 +18,13 @@ public class Trade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tradeId;
+	@NotEmpty(message = "This field is required")
 	private String account;
+	@NotEmpty(message = "This field is required")
 	private String type;
+	@Digits(integer = 10, fraction = 2)
+	@Positive(message = "this value must not be negative")
+	@NotNull(message = "this must be numeric and not null")
 	private Double buyQuantity;
 	private Double sellQuantity;
 	private Double buyPrice;
@@ -36,7 +45,7 @@ public class Trade {
 	}
 
 	public Trade(String account,String type, Double buyQuantity) {
-		// TODO tous les param obligatoires
+		// tous les param obligatoires
 		super();
 		this.account = account;
 		this.type = type;
