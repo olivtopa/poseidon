@@ -24,7 +24,7 @@ public class TradeTest {
 
 	@Test
 	public void tradeTest() {
-		Double buyQuantity = null;
+		Double buyQuantity = 2.0;
 		Trade trade = new Trade("Trade Account", "Type",buyQuantity);
 
 		// Save
