@@ -1,6 +1,6 @@
 package com.olivtopa.poseidon.domain;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,16 +31,16 @@ public class BidList {
 	private Double bid;
 	private Double ask;
 	private String benchmark;
-	private Timestamp bidListDate;
+	private LocalDateTime bidListDate;
 	private String commentary;
 	private String security;
 	private String status;
 	private String trader;
 	private String book;
 	private String creationName;
-	private Timestamp creationDate;
+	private LocalDateTime creationDate;
 	private String revisionName;
-	private Timestamp revisionDate;
+	private LocalDateTime revisionDate;
 	private String dealName;
 	private String dealType;
 	private String sourceListId;
@@ -122,11 +122,11 @@ public class BidList {
 		this.benchmark = benchmark;
 	}
 
-	public Timestamp getBidListDate() {
+	public LocalDateTime getBidListDate() {
 		return bidListDate;
 	}
 
-	public void setBidListDate(Timestamp bidListDate) {
+	public void setBidListDate(LocalDateTime bidListDate) {
 		this.bidListDate = bidListDate;
 	}
 
@@ -178,11 +178,11 @@ public class BidList {
 		this.creationName = creationName;
 	}
 
-	public Timestamp getCreationDate() {
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Timestamp creationDate) {
+	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
 
@@ -194,11 +194,11 @@ public class BidList {
 		this.revisionName = revisionName;
 	}
 
-	public Timestamp getRevisionDate() {
+	public LocalDateTime getRevisionDate() {
 		return revisionDate;
 	}
 
-	public void setRevisionDate(Timestamp revisionDate) {
+	public void setRevisionDate(LocalDateTime revisionDate) {
 		this.revisionDate = revisionDate;
 	}
 

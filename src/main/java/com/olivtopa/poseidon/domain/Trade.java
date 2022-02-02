@@ -1,6 +1,6 @@
 package com.olivtopa.poseidon.domain;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,13 +29,13 @@ public class Trade {
 	private Double sellQuantity;
 	private Double buyPrice;
 	private String benchmark;
-	private Timestamp tradeDate;
+	private LocalDateTime tradeDate;
 	private String security;
 	private String status;
 	private String trader;
 	private String book;
 	private String creationName;
-	private Timestamp revisionDate;
+	private LocalDateTime revisionDate;
 	private String dealName;
 	private String sourceListId;
 	private String side;
@@ -44,7 +44,7 @@ public class Trade {
 		super();
 	}
 
-	public Trade(String account,String type, Double buyQuantity) {
+	public Trade(String account, String type, Double buyQuantity) {
 		// tous les param obligatoires
 		super();
 		this.account = account;
@@ -85,14 +85,12 @@ public class Trade {
 		this.tradeId = tradeId;
 	}
 
-	
-
 	public Double getSellQuantity​() {
 		return sellQuantity;
 	}
 
 	public void setSellQuantity​(Double sellQuantity) {
-		this.sellQuantity= sellQuantity;
+		this.sellQuantity = sellQuantity;
 	}
 
 	public Double getBuyPrice() {
@@ -111,11 +109,11 @@ public class Trade {
 		this.benchmark = benchmark;
 	}
 
-	public Timestamp getTradeDate() {
+	public LocalDateTime getTradeDate() {
 		return tradeDate;
 	}
 
-	public void setTradeDate(Timestamp tradeDate) {
+	public void setTradeDate(LocalDateTime tradeDate) {
 		this.tradeDate = tradeDate;
 	}
 
@@ -159,11 +157,11 @@ public class Trade {
 		this.creationName = creationName;
 	}
 
-	public Timestamp getRevisionDate() {
+	public LocalDateTime getRevisionDate() {
 		return revisionDate;
 	}
 
-	public void setRevisionDate(Timestamp revisionDate) {
+	public void setRevisionDate(LocalDateTime revisionDate) {
 		this.revisionDate = revisionDate;
 	}
 
@@ -199,5 +197,5 @@ public class Trade {
 				+ ", book=" + book + ", creationName=" + creationName + ", revisionDate=" + revisionDate + ", dealName="
 				+ dealName + ", sourceListId=" + sourceListId + ", side=" + side + "]";
 	}
-	
+
 }

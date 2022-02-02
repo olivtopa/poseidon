@@ -1,6 +1,6 @@
 package com.olivtopa.poseidon.domain;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +21,7 @@ public class CurvePoint {
 	@Positive(message = "this value must not be negative")
 	@NotNull(message = "this must be numeric and not null")
 	private Integer curveId;
-	private Timestamp asOfDate;
+	private LocalDateTime asOfDate;
 	@Digits(integer = 10, fraction = 2)
 	@Positive(message = "this value must not be negative")
 	@NotNull(message = "this must be numeric and not null")
@@ -30,7 +30,7 @@ public class CurvePoint {
 	@Positive(message = "this value must not be negative")
 	@NotNull(message = "this must be numeric and not null")
 	private Double value;
-	private Timestamp creationDate;
+	private LocalDateTime creationDate;
 
 	public CurvePoint() {
 		super();
@@ -60,11 +60,11 @@ public class CurvePoint {
 		this.curveId = curveId;
 	}
 
-	public Timestamp getAsOfDate() {
+	public LocalDateTime getAsOfDate() {
 		return asOfDate;
 	}
 
-	public void setAsOfDate(Timestamp asOfDate) {
+	public void setAsOfDate(LocalDateTime asOfDate) {
 		this.asOfDate = asOfDate;
 	}
 
@@ -84,11 +84,11 @@ public class CurvePoint {
 		this.value = value;
 	}
 
-	public Timestamp getCreationDate() {
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Timestamp creationDate) {
+	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
 
