@@ -46,19 +46,19 @@ public class CurvePointIT {
 		curvePointRepository.save(buildValid());
 		
 		mockMvc.perform(get(homeUrl).with(user("testAdmin").password("test").roles("USER"))).andExpect(status().isOk())
-		.andExpect(model().attribute("curvePoint", iterableWithSize(1))).andExpect(view().name("/curvePoint/list"));
+				.andExpect(model().attribute("curvePoint", iterableWithSize(1))).andExpect(view().name("/curvePoint/list"));
 		
 		mockMvc.perform(get(homeUrl).with(anonymous())).andExpect(status().isFound())
-		.andExpect(redirectedUrl("http://localhost/login"));
+				.andExpect(redirectedUrl("http://localhost/login"));
 	}
 	
 	@Test
 	public void addCurveForm() throws Exception {
 		mockMvc.perform(get(createFormUrl).with(user("userTest").roles("USER"))).andExpect(status().isOk())
-			.andExpect(view().name("curvePoint/add"));
+				.andExpect(view().name("curvePoint/add"));
 		
 		mockMvc.perform(get(createFormUrl).with(anonymous())).andExpect(status().isFound())
-		.andExpect(redirectedUrl("http://localhost/login"));
+				.andExpect(redirectedUrl("http://localhost/login"));
 	}
 	
 	@Test
@@ -70,10 +70,10 @@ public class CurvePointIT {
 		invalid.setTerm(null);
 		
 		mockMvc.perform(post(createUrl).with(user("userTest").roles("USER")).content(getUrlEncoded(valid)))
-		.andExpect(status().isFound()).andExpect(redirectedUrl(homeUrl));
+				.andExpect(status().isFound()).andExpect(redirectedUrl(homeUrl));
 		
 		mockMvc.perform(post(createUrl).with(user("userTest").roles("USER")).content(getUrlEncoded(invalid)))
-		.andExpect(status().isFound());
+				.andExpect(status().isOk());
 	}
 	
 	@Test
@@ -109,7 +109,7 @@ public class CurvePointIT {
 				.andExpect(status().isFound()).andExpect(redirectedUrl("/curvePoint/list"));
 
 		mockMvc.perform(post(updateUrl, 1).with(user("userTest").roles("USER")).content(getUrlEncoded(invalid)))
-				.andExpect(status().isFound());
+				.andExpect(status().isOk());
 	}
 	
 	@Test
@@ -119,12 +119,12 @@ public class CurvePointIT {
 		CurvePoint curve = curvePointRepository.save(buildValid());
 		
 		mockMvc.perform(get(deleteUrl,curve.getCurveId()).with(user("userTest").roles("USER")))
-		.andExpect(redirectedUrl(homeUrl)).andExpect(status().isFound());
+				.andExpect(redirectedUrl(homeUrl)).andExpect(status().isFound());
 		
 		assertTrue(curvePointRepository.findById(curve.getCurveId()).isEmpty());
 		
 		mockMvc.perform(get(deleteUrl, 1).with(user("userTest").roles("USER"))).andExpect(status().isNotFound())
-		.andExpect(result -> assertTrue(result.getResolvedException() instanceof DataNotFoundException));
+				.andExpect(result -> assertTrue(result.getResolvedException() instanceof DataNotFoundException));
 		
 	}
 	
