@@ -14,7 +14,7 @@ public class StringToIntegerConverter implements Converter<String, Integer> {
 		try {
 			return Integer.parseInt(source);
 		} catch (Exception e) {
-			logger.info("Converting {} ti Integer type failed !", source);
+			logger.info("Converting {} to Integer type failed !", source);
 			return null;
 		}
 	}
