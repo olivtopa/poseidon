@@ -57,7 +57,7 @@ public class CurveController {
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 		logger.info("Display update Curve form");
 		CurvePoint curve = curveService.getCurveById(id);
-		model.addAttribute("curvePoint", curve);
+		model.addAttribute("curvepoint", curve);
 		return "curvePoint/update";
 	}
 
@@ -81,7 +81,7 @@ public class CurveController {
 		logger.info("Deleting CurvePoint {} ...", id);
 		CurvePoint curve = curveService.getCurveById(id);
 		curveService.deleteBid(curve);
-		model.addAttribute("curvePoint", curveService.getAllCurve());
+		model.addAttribute("curvepoint", curveService.getAllCurve());
 		logger.info("CurvePoint deleted !");
 		return "redirect:/curvePoint/list";
 	}
