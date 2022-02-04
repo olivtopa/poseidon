@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.olivtopa.poseidon.domain.Rating;
+import com.olivtopa.poseidon.exceptions.DataNotFoundException;
 import com.olivtopa.poseidon.repositories.RatingRepository;
 import com.olivtopa.poseidon.services.RatingService;
 
@@ -57,7 +58,7 @@ public class RatingController {
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 		logger.info("Display update rating form");
 		Rating rating = ratingRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid Rating Id :" + id));
+				.orElseThrow(() -> new DataNotFoundException("Invalid Rating Id :" + id));
 		model.addAttribute("rating", rating);
 		return "rating/update";
 	}
@@ -81,7 +82,7 @@ public class RatingController {
 	public String deleteRating(@PathVariable("id") Integer id, Model model) {
 		logger.info("deleting rating :{} ", id);
 		Rating rating = ratingRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid rating Id :" + id));
+				.orElseThrow(() -> new DataNotFoundException("Invalid rating Id :" + id));
 		ratingService.deleteBid(rating);
 		model.addAttribute("rating", ratingService.getAllRating());
 		logger.info("Rating deleted !");
