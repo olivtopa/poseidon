@@ -1,7 +1,5 @@
 package com.olivtopa.poseidon;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -11,61 +9,56 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import javax.transaction.Transactional;
 
-import static org.hamcrest.Matchers.iterableWithSize;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.hamcrest.Matchers.iterableWithSize;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
-import com.olivtopa.poseidon.domain.CurvePoint;
-import com.olivtopa.poseidon.exceptions.DataNotFoundException;
-import com.olivtopa.poseidon.repositories.CurvePointRepository;
 import static com.olivtopa.poseidon.FormatToUrlEncoded.getUrlEncoded;
+import com.olivtopa.poseidon.domain.Trade;
+import com.olivtopa.poseidon.exceptions.DataNotFoundException;
+import com.olivtopa.poseidon.repositories.TradeRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CurvePointIT {
+public class TradeIT {
 
 	@Autowired
-	CurvePointRepository curvePointRepository;
+	TradeRepository tradeRepository;
 	@Autowired
 	MockMvc mockMvc;
 
-	private final static String homeUrl = "/curvePoint/list";
-	private final static String createFormUrl = "/curvePoint/add";
-	private final static String createUrl = "/curvePoint/validate";
-	private final static String updateFormUrl = "/curvePoint/update/{id}";
-	private final static String updateUrl = "/curvePoint/update/{id}";
-	private final static String deleteUrl = "/curvePoint/delete/{id}";
-
-	private CurvePoint buildValid() {
-		CurvePoint valid = new CurvePoint();
-		valid.setCurveId(10);
-		valid.setTerm(15.3);
-		valid.setValue(32.0);
-		return valid;
-	}
+	private final static String homeUrl = "/trade/list";
+	private final static String createFormUrl = "/trade/add";
+	private final static String createUrl = "/trade/validate";
+	private final static String updateFormUrl = "/trade/update/{id}";
+	private final static String updateUrl = "/trade/update/{id}";
+	private final static String deleteUrl = "/trade/delete/{id}";
 
 	@Test
 	public void home() throws Exception {
-		curvePointRepository.save(buildValid());
+		tradeRepository.save(buildValid());
 
 		mockMvc.perform(get(homeUrl).with(user("testAdmin").password("test").roles("USER"))).andExpect(status().isOk())
-				.andExpect(model().attribute("curvePoint", iterableWithSize(1)))
-				.andExpect(view().name("curvePoint/list"));
+				.andExpect(model().attribute("trade", iterableWithSize(1))).andExpect(view().name("trade/list"));
 
 		mockMvc.perform(get(homeUrl).with(anonymous())).andExpect(status().isFound())
 				.andExpect(redirectedUrl("http://localhost/login"));
 	}
 
 	@Test
-	public void addCurveForm() throws Exception {
+	public void addTradeForm() throws Exception {
 		mockMvc.perform(get(createFormUrl).with(user("userTest").roles("USER"))).andExpect(status().isOk())
-				.andExpect(view().name("curvePoint/add"));
+				.andExpect(view().name("trade/add"));
+
+		mockMvc.perform(get(createFormUrl).with(user("userTest").roles("USER"))).andExpect(status().isOk())
+				.andExpect(view().name("trade/add"));
 
 		mockMvc.perform(get(createFormUrl).with(anonymous())).andExpect(status().isFound())
 				.andExpect(redirectedUrl("http://localhost/login"));
@@ -74,10 +67,12 @@ public class CurvePointIT {
 	@Test
 	@Transactional
 	public void validate() throws Exception {
-		CurvePoint valid = buildValid();
-		CurvePoint invalid = new CurvePoint();
-		invalid.setCurveId(null);
-		invalid.setTerm(null);
+
+		Trade valid = buildValid();
+		valid.setAccount("account");
+		valid.setType("Type");
+		valid.setBuyQuantity(12.9);
+		Trade invalid = new Trade();
 
 		mockMvc.perform(post(createUrl).with(user("userTest").roles("USER"))
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED).content(getUrlEncoded(valid)))
@@ -86,36 +81,45 @@ public class CurvePointIT {
 		mockMvc.perform(post(createUrl).with(user("userTest").roles("USER"))
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED).content(getUrlEncoded(invalid)))
 				.andExpect(status().isOk());
+
+	}
+
+	private Trade buildValid() {
+		Trade valid = new Trade();
+		valid.setAccount("account");
+		valid.setType("type");
+		valid.setTradeId(14);
+		valid.setBuyQuantity(34.8);
+		return valid;
 	}
 
 	@Test
 	public void showUpdateForm() throws Exception {
 
-		CurvePoint curve = curvePointRepository.save(buildValid());
+		Trade trade = tradeRepository.save(buildValid());
 
-		mockMvc.perform(get(updateFormUrl, curve.getId()).with(user("userTest").roles("USER")))
-				.andExpect(status().isOk()).andExpect(view().name("curvePoint/update"));
+		mockMvc.perform(get(updateFormUrl, trade.getTradeId()).with(user("userTest").roles("USER")))
+				.andExpect(status().isOk()).andExpect(view().name("trade/update"));
 
-		mockMvc.perform(get(updateFormUrl, curve.getId()).with(anonymous())).andExpect(status().isFound())
+		mockMvc.perform(get(updateFormUrl, trade.getTradeId()).with(anonymous())).andExpect(status().isFound())
 				.andExpect(redirectedUrl("http://localhost/login"));
 
 		mockMvc.perform(get(updateFormUrl, 999).with(user("userTest").roles("USER"))).andExpect(status().isNotFound())
 				.andExpect(result -> assertTrue(result.getResolvedException() instanceof DataNotFoundException));
-
 	}
 
 	@Test
 	@Transactional
-	public void updateCurve() throws Exception {
+	public void updateTrade() throws Exception {
 
-		curvePointRepository.save(buildValid());
+		tradeRepository.save(buildValid());
 
-		CurvePoint valid = new CurvePoint();
-		valid.setCurveId(9);
-		valid.setTerm(12.3);
-		valid.setValue(16.3);
-		CurvePoint invalid = new CurvePoint();
-		invalid.setCurveId(null);
+		Trade valid = new Trade();
+		valid.setTradeId(3);
+		valid.setAccount("account");
+		valid.setType("type");
+		valid.setBuyQuantity(56.6);
+		Trade invalid = new Trade();
 
 		mockMvc.perform(post(updateUrl, 1).with(user("userTest").roles("USER"))
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED).content(getUrlEncoded(valid)))
@@ -128,18 +132,17 @@ public class CurvePointIT {
 
 	@Test
 	@Transactional
-	public void deleteCurve() throws Exception {
+	public void deleteTrade() throws Exception {
 
-		CurvePoint curve = curvePointRepository.save(buildValid());
+		Trade trade = tradeRepository.save(buildValid());
 
-		mockMvc.perform(get(deleteUrl, curve.getId()).with(user("userTest").roles("USER")))
+		mockMvc.perform(get(deleteUrl, trade.getTradeId()).with(user("userTest").roles("USER")))
 				.andExpect(redirectedUrl(homeUrl)).andExpect(status().isFound());
 
-		assertTrue(curvePointRepository.findById(curve.getId()).isEmpty());
+		assertTrue(tradeRepository.findById(trade.getTradeId()).isEmpty());
 
 		mockMvc.perform(get(deleteUrl, 1).with(user("userTest").roles("USER"))).andExpect(status().isNotFound())
 				.andExpect(result -> assertTrue(result.getResolvedException() instanceof DataNotFoundException));
-
 	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.olivtopa.poseidon.domain.RuleName;
+import com.olivtopa.poseidon.exceptions.DataNotFoundException;
 import com.olivtopa.poseidon.repositories.RuleNameRepository;
 import com.olivtopa.poseidon.services.RuleNameService;
 
@@ -24,13 +25,13 @@ public class RuleNameController {
 	
 	@Autowired
 	private RuleNameService ruleNameService;
-	@Autowired RuleNameRepository ruleNameRepository;
+	@Autowired 
+	RuleNameRepository ruleNameRepository;
 
     @RequestMapping("/ruleName/list")
-    public String home(Model model)
-    {
+    public String home(Model model){
     	logger.info("Rule List page");
-        model.addAttribute("rulename", ruleNameService.getAllRuleName());
+        model.addAttribute("ruleNames", ruleNameService.getAllRuleName());
         return "ruleName/list";
     }
 
@@ -45,7 +46,7 @@ public class RuleNameController {
     	logger.info("Adding Rule {}",ruleName);
     	if (!result.hasErrors()) {
 			ruleNameService.save(ruleName);
-			model.addAttribute("ruleName", ruleNameService.getAllRuleName());
+			model.addAttribute("ruleNames", ruleNameService.getAllRuleName());
 			logger.info("ruleName added ! : id = {}", ruleName.getId());
 			return "redirect:/ruleName/list";
 		}
@@ -71,7 +72,7 @@ public class RuleNameController {
     	logger.info("Rule updating ...{}", ruleName);
     	ruleName.setId(id);
     	ruleNameService.save(ruleName);
-		model.addAttribute("ruleName", ruleName);
+		model.addAttribute("ruleNames", ruleNameService.getAllRuleName());
 		logger.info("ruleName updated ! : {}", ruleName.getId());
         return "redirect:/ruleName/list";
     }
@@ -80,9 +81,9 @@ public class RuleNameController {
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
     	logger.info("Deleting rule {}...",id);
     	RuleName ruleName = ruleNameRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id :" + id));
+				.orElseThrow(() -> new DataNotFoundException("Invalid ruleName Id :" + id));
     	ruleNameService.deleteBid(ruleName);
-		model.addAttribute("ruleName", ruleNameService.getAllRuleName());
+		model.addAttribute("ruleNames", ruleNameService.getAllRuleName());
 		logger.info("Rule deleted !");
         return "redirect:/ruleName/list";
     }

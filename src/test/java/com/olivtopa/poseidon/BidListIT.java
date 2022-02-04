@@ -60,8 +60,8 @@ public class BidListIT {
 		mockMvc.perform(get(createFormUrl).with(user("userTest").roles("USER"))).andExpect(status().isOk())
 				.andExpect(view().name("bidList/add"));
 
-		mockMvc.perform(get(createFormUrl).with(anonymous())).andExpect(status().isFound())
-				.andExpect(redirectedUrl("http://localhost/login"));
+		mockMvc.perform(get(createFormUrl).with(anonymous()))
+		.andExpect(status().isFound()).andExpect(redirectedUrl("http://localhost/login"));
 	}
 
 	@Test
