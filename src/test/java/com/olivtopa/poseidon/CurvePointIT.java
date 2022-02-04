@@ -93,10 +93,10 @@ public class CurvePointIT {
 
 		CurvePoint curve = curvePointRepository.save(buildValid());
 
-		mockMvc.perform(get(updateFormUrl, curve.getCurveId()).with(user("userTest").roles("USER")))
+		mockMvc.perform(get(updateFormUrl, curve.getId()).with(user("userTest").roles("USER")))
 				.andExpect(status().isOk()).andExpect(view().name("curvePoint/update"));
 
-		mockMvc.perform(get(updateFormUrl, curve.getCurveId()).with(anonymous())).andExpect(status().isFound())
+		mockMvc.perform(get(updateFormUrl, curve.getId()).with(anonymous())).andExpect(status().isFound())
 				.andExpect(redirectedUrl("http://localhost/login"));
 
 		mockMvc.perform(get(updateFormUrl, 999).with(user("userTest").roles("USER"))).andExpect(status().isNotFound())
@@ -132,10 +132,10 @@ public class CurvePointIT {
 
 		CurvePoint curve = curvePointRepository.save(buildValid());
 
-		mockMvc.perform(get(deleteUrl, curve.getCurveId()).with(user("userTest").roles("USER")))
+		mockMvc.perform(get(deleteUrl, curve.getId()).with(user("userTest").roles("USER")))
 				.andExpect(redirectedUrl(homeUrl)).andExpect(status().isFound());
 
-		assertTrue(curvePointRepository.findById(curve.getCurveId()).isEmpty());
+		assertTrue(curvePointRepository.findById(curve.getId()).isEmpty());
 
 		mockMvc.perform(get(deleteUrl, 1).with(user("userTest").roles("USER"))).andExpect(status().isNotFound())
 				.andExpect(result -> assertTrue(result.getResolvedException() instanceof DataNotFoundException));

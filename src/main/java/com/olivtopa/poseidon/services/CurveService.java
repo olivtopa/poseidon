@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.olivtopa.poseidon.domain.CurvePoint;
+import com.olivtopa.poseidon.exceptions.DataNotFoundException;
 import com.olivtopa.poseidon.repositories.CurvePointRepository;
 
 @Service
@@ -17,7 +18,7 @@ public class CurveService {
 	}
 	
 	public CurvePoint getCurveById(Integer id) {
-		return curvePointRepository.findById(id).orElseThrow(()->new IllegalArgumentException());
+		return curvePointRepository.findById(id).orElseThrow(()->new DataNotFoundException(String.format("CurvePoint %d not found",id)));
 	}
 
 	public void save(CurvePoint curvePoint) {

@@ -30,7 +30,7 @@ public class CurveController {
 	@RequestMapping("/curvePoint/list")
 	public String home(Model model) {
 		logger.info("Curve List page");
-		model.addAttribute("curvepoint",curveService.getAllCurve());
+		model.addAttribute("curvePoints",curveService.getAllCurve());
 		return "curvePoint/list";
 	}
 
@@ -45,7 +45,7 @@ public class CurveController {
 		logger.info("Adding Curve Point {}: ",curvePoint);
 		if (!result.hasErrors()) {
 			curveService.save(curvePoint);
-			model.addAttribute("curvepoint", curveService.getAllCurve());
+			model.addAttribute("curvePoints", curveService.getAllCurve());
 			logger.info("CurvePoint added ! : id = {}", curvePoint.getId());
 			return "redirect:/curvePoint/list";
 		}
@@ -57,7 +57,7 @@ public class CurveController {
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 		logger.info("Display update Curve form");
 		CurvePoint curve = curveService.getCurveById(id);
-		model.addAttribute("curvepoint", curve);
+		model.addAttribute("curvePoint", curve);
 		return "curvePoint/update";
 	}
 
@@ -71,7 +71,7 @@ public class CurveController {
 		logger.info("CurvePoint updating ...{} ",curvePoint);
 		curvePoint.setCurveId(id);
 		curveService.save(curvePoint);
-		model.addAttribute("curvepoint", curveService.getAllCurve());
+		model.addAttribute("curvePoints", curveService.getAllCurve());
 		logger.info("CurvePoint updated ! : {}", id);
 		return "redirect:/curvePoint/list";
 	}
@@ -81,7 +81,7 @@ public class CurveController {
 		logger.info("Deleting CurvePoint {} ...", id);
 		CurvePoint curve = curveService.getCurveById(id);
 		curveService.deleteBid(curve);
-		model.addAttribute("curvepoint", curveService.getAllCurve());
+		model.addAttribute("curvePoints", curveService.getAllCurve());
 		logger.info("CurvePoint deleted !");
 		return "redirect:/curvePoint/list";
 	}
