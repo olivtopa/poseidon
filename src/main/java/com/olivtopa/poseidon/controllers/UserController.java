@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.olivtopa.poseidon.domain.User;
 import com.olivtopa.poseidon.repositories.UserRepository;
-import com.olivtopa.poseidon.validation.contraints.PasswordConstraintValidator;
 
 @Controller
 public class UserController {

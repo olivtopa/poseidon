@@ -80,8 +80,7 @@ public class RuleNameController {
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
     	logger.info("Deleting rule {}...",id);
-    	RuleName ruleName = ruleNameRepository.findById(id)
-				.orElseThrow(() -> new DataNotFoundException("Invalid ruleName Id :" + id));
+    	RuleName ruleName = ruleNameService.getRuleById(id);
     	ruleNameService.deleteBid(ruleName);
 		model.addAttribute("ruleNames", ruleNameService.getAllRuleName());
 		logger.info("Rule deleted !");
