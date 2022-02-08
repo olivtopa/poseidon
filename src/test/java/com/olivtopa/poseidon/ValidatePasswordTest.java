@@ -42,7 +42,7 @@ public class ValidatePasswordTest {
 		user.setFullname("toto");
 		user.setRole("role1");
 		user.setPassword("Maiso@");
-		Mockito.when(constraintValidatorContext.buildConstraintViolationWithTemplate("")).thenReturn(null);
+		//Mockito.when(constraintValidatorContext.buildConstraintViolationWithTemplate("")).thenReturn(null);
 		// When + Then
 		Assertions.assertFalse(passwordConstraintValidator.isValid(user.getPassword(), constraintValidatorContext));
 	}
