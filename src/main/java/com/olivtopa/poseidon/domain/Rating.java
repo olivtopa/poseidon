@@ -28,7 +28,6 @@ public class Rating {
 	}
 
 	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
-		//orderNumber obligatoire
 		super();
 		this.moodysRating = moodysRating;
 		this.sandPRating = sandPRating;

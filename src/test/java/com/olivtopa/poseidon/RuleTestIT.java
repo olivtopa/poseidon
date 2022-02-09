@@ -46,7 +46,7 @@ public class RuleTestIT {
 		ruleNameRepository.save(buildValid());
 
 		mockMvc.perform(get(homeUrl).with(user("testAdmin").password("test").roles("USER"))).andExpect(status().isOk())
-				.andExpect(model().attribute("ruleName", iterableWithSize(1))).andExpect(view().name("ruleName/list"));
+				.andExpect(model().attribute("ruleNames", iterableWithSize(1))).andExpect(view().name("ruleName/list"));
 
 		mockMvc.perform(get(homeUrl).with(anonymous())).andExpect(status().isFound())
 				.andExpect(redirectedUrl("http://localhost/login"));

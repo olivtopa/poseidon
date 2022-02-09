@@ -45,7 +45,6 @@ public class Trade {
 	}
 
 	public Trade(String account, String type, Double buyQuantity) {
-		// tous les param obligatoires
 		super();
 		this.account = account;
 		this.type = type;

@@ -55,7 +55,7 @@ public class CurvePointIT {
 		curvePointRepository.save(buildValid());
 
 		mockMvc.perform(get(homeUrl).with(user("testAdmin").password("test").roles("USER"))).andExpect(status().isOk())
-				.andExpect(model().attribute("curvePoint", iterableWithSize(1)))
+				.andExpect(model().attribute("curvePoints", iterableWithSize(1)))
 				.andExpect(view().name("curvePoint/list"));
 
 		mockMvc.perform(get(homeUrl).with(anonymous())).andExpect(status().isFound())
