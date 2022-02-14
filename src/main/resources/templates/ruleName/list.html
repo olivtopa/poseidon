@@ -40,7 +40,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			<tr th:each="rulename : ${rulename}">
+			<tr th:each="rulename : ${ruleNames}">
 					<td style="width: 10%" th:text="${rulename.id}"></td>
 					<td th:text="${rulename.name}"></td>
 					<td style="width: 25%" th:text="${rulename.description}"></td>
