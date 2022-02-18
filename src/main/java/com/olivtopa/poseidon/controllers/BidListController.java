@@ -2,6 +2,9 @@ package com.olivtopa.poseidon.controllers;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,45 +14,72 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.olivtopa.poseidon.domain.BidList;
+import com.olivtopa.poseidon.services.BidListService;
 
 @Controller
 public class BidListController {
-	// TODO: Inject Bid service
 
-    @RequestMapping("/bidList/list")
-    public String home(Model model)
-    {
-        // TODO: call service find all bids to show to the view
-        return "bidList/list";
-    }
+	private static final Logger logger = LoggerFactory.getLogger(BidListController.class);
 
-    @GetMapping("/bidList/add")
-    public String addBidForm(BidList bid) {
-        return "bidList/add";
-    }
+	@Autowired
+	private BidListService bidListService;
 
-    @PostMapping("/bidList/validate")
-    public String validate(@Valid BidList bid, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return bid list
-        return "bidList/add";
-    }
+	@RequestMapping("/bidList/list")
+	public String home(Model model) {
+		logger.info("Bid List page");
+		model.addAttribute("bidlist", bidListService.getAllBid());
+		return "bidList/list";
+	}
 
-    @GetMapping("/bidList/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
-        return "bidList/update";
-    }
+	@GetMapping("/bidList/add")
+	public String addBidList(BidList bid) {
+		logger.info("display add bid form");
+		return "bidList/add";
+	}
 
-    @PostMapping("/bidList/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
-        return "redirect:/bidList/list";
-    }
+	@PostMapping("/bidList/validate")
+	public String validate(@Valid BidList bid, BindingResult result, Model model) {
+		logger.info("Adding Bid {}: ",bid);
+		if (!result.hasErrors()) {
+			bidListService.save(bid);
+			model.addAttribute("bidlist", bidListService.getAllBid());
+			logger.info("bid added ! : {}", bid.getBidListId());
+			return "redirect:/bidList/list";
+		}
+		logger.info("Adding Bid error ! {} ",result);
+		return "bidList/add";
+	}
 
-    @GetMapping("/bidList/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
-        return "redirect:/bidList/list";
-    }
+	@GetMapping("/bidList/update/{bidListId}")
+	public String showUpdateForm(@PathVariable("bidListId") Integer bidListId, Model model) {
+		logger.info("Display update BidList form");
+		BidList bid = bidListService.getBidListById(bidListId);
+		model.addAttribute("bidList", bid);
+		return "bidList/update";
+	}
+
+	@PostMapping("/bidList/update/{bidListId}")
+	public String updateBid(@PathVariable("bidListId") Integer bidListId, @Valid BidList bidList, BindingResult result,
+			Model model) {
+		if (result.hasErrors()) {
+			logger.info("Update error ! {} ",result);
+			return "bidList/update";
+		}
+		logger.info("BidList Updating ...{} ", bidList);
+		bidList.setBidListId(bidListId);
+		bidListService.save(bidList);
+		model.addAttribute("bidlist", bidListService.getAllBid());
+		logger.info("BidList updated ! : {}", bidListId);
+		return "redirect:/bidList/list";
+	}
+
+	@GetMapping("/bidList/delete/{bidListId}")
+	public String deleteBid(@PathVariable("bidListId") Integer bidListId, Model model) {
+		logger.info("Deleting BidList {} ",bidListId);
+		BidList bid = bidListService.getBidListById(bidListId);
+		bidListService.deleteBid(bid);
+		model.addAttribute("bidlist", bidListService.getAllBid());
+		logger.info("bid deleted !");
+		return "redirect:/bidList/list";
+	}
 }
