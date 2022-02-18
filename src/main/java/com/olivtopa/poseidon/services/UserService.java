@@ -8,12 +8,19 @@ import com.olivtopa.poseidon.repositories.UserRepository;
 
 @Service
 public class UserService {
-	
 	@Autowired
 	private UserRepository userRepository;
-	
-	public Iterable<User> getUsers() {
+
+	public Iterable<User> getAllBid() {
 		return userRepository.findAll();
+	}
+
+	public void save(User user) {
+		userRepository.save(user);
+	}
+
+	public void deleteBid(User user) {
+		userRepository.delete(user);
 	}
 
 }
